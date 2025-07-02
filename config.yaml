@@ -1,0 +1,11 @@
+services:
+  - name: go-app
+    path: /go
+    port: 8080
+    build: ./go-app
+
+  - name: python-app
+    path: /py
+    port: 5000
+    build: ./python-app
+ 

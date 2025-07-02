@@ -1,0 +1,22 @@
+services:
+  go-app:
+    build: ./go-app
+    container_name: go-app
+    expose:
+    - '8080'
+  nginx:
+    container_name: nginx
+    depends_on:
+    - go-app
+    - python-app
+    image: nginx:latest
+    ports:
+    - 8080:80
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf
+  python-app:
+    build: ./python-app
+    container_name: python-app
+    expose:
+    - '5000'
+version: '3'

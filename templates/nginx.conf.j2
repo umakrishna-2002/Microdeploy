@@ -1,0 +1,17 @@
+events {}
+
+http {
+    server {
+        listen 80;
+
+        {% for service in services %}
+        location {{ service.path }}/ {
+            proxy_pass http://{{ service.name }}:{{ service.port }}/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+        {% endfor %}
+    }
+}
