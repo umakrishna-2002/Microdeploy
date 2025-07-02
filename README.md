@@ -35,3 +35,11 @@ MicroDeploy/
 ```
 
 Pack your application, requirements in a folder and add it to config.yaml file along with the Internal port container.
+
+- We need to mention the name of the container we wanted to be in.
+
+- The URL path prefix for NGINX reverse proxy routing.
+
+- The internal port your app listens on (inside its Docker container).
+
+- The relative directory path that contains the app and its Dockerfile
