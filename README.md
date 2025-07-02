@@ -33,3 +33,5 @@ MicroDeploy/
 │
 └── README.md              # Project documentation
 ```
+
+Pack your application, requirements in a folder and add it to config.yaml file along with the Internal port container.
