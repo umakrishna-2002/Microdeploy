@@ -55,5 +55,15 @@ The work flow goes as follows:
 
   2. Checks if need to pull the image or it will build the image.
 
+   3. Now it will add the nginx reverse proxy (here we didn't fixed any name to the container), which makes the code reusable.
 
+   ```
+   compose['services']['nginx'] = {
+        'image': 'nginx:latest',
+        'ports': ['8080:80'],
+        'volumes': ['./nginx.conf:/etc/nginx/nginx.conf'],
+        'depends_on': [svc['name'] for svc in services]
+    }
+
+    ``` 
 
