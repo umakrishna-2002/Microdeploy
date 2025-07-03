@@ -44,5 +44,16 @@ Pack your application, requirements in a folder and add it to config.yaml file a
 
 - The relative directory path that contains the app and its Dockerfile
 
+The work flow goes as follows:
+
+- The generator.py will reads the config.yaml which contains the desired container name, port and the path of the application and its Dockerfile.
+
+- Then generates the nginx.conif file by using the nginx.conf.j2, dynamically generate the main Nginx configuration file nginx.conf
+
+- Here comes the main part: Docker compose file generation.
+  1. Adds the services from config.yaml.
+
+  2. Checks if need to pull the image or it will build the image.
+
 
 
