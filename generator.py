@@ -24,7 +24,6 @@ def generate_nginx_config(services):
 
     print("✅ nginx.conf generated")
 
-
 # -------------------------
 # Generate docker-compose.yml
 # -------------------------
@@ -37,7 +36,6 @@ def generate_docker_compose(services):
     # Add all services from config.yaml
     for svc in services:
         config = {
-            'container_name': svc['name'],
             'expose': [str(svc['port'])]
         }
 
@@ -49,12 +47,11 @@ def generate_docker_compose(services):
 
         compose['services'][svc['name']] = config
 
-    # Add nginx reverse proxy service
+    # Add nginx reverse proxy service (without fixed container_name)
     compose['services']['nginx'] = {
         'image': 'nginx:latest',
-        'container_name': 'nginx',
         'ports': ['8080:80'],
-        'volumes': ['./nginx.conf:/etc/nginx/nginx.conf'],  # ✅ Updated to current dir
+        'volumes': ['./nginx.conf:/etc/nginx/nginx.conf'],
         'depends_on': [svc['name'] for svc in services]
     }
 
