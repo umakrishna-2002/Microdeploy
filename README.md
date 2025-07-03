@@ -66,4 +66,4 @@ The work flow goes as follows:
     }
 
     ``` 
-
+ When you explicitly name a container, Docker prevents creating multiple containers with the same name. To avoid the name conflix while we want to generate docker-compose for two different applications, name was explited. 
