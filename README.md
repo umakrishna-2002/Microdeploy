@@ -118,5 +118,8 @@ python main.py deploy config.yaml
 
 - Then it automatically builds the proxy and Docker Compose files using the services defined
 
+``` http://localhost:8080/path ```    #it will take the path we given the config.yaml
 
-<mark> hello </mark>
+- http://localhost:8080/go
+
+- http://localhost:8080/python   
