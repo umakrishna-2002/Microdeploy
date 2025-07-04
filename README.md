@@ -68,8 +68,7 @@ The work flow goes as follows:
     ``` 
  When you explicitly name a container, Docker prevents creating multiple containers with the same name. To avoid the name conflix while we want to generate docker-compose for two different applications, name was ignored.
 
-
-<mark>main.py</mark> this is the entrypoint for CLI.  It reads a config file, then triggers the automatic generation of nginx.conf and docker-compose.yml.
+<pre>main.py</pre> this is the entrypoint for CLI.  It reads a config file, then triggers the automatic generation of nginx.conf and docker-compose.yml.
 
 ```
 from generator import load_config, generate_nginx_config, generate_docker_compose
