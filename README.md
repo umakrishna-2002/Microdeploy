@@ -25,8 +25,8 @@ MicroDeploy/
 │
 ├── go-app/                # Example Go microservice
 │   ├── main.go
-│   └── Dockerfile
-│
+│   └── Dockerfile    
+│                            # <b>You can add your applications and pack your app dependencies in the following paths and attch them in config.yaml </b>
 ├── python-app/            # Example Python microservice
 │   ├── app.py
 │   └── Dockerfile
