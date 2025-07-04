@@ -82,3 +82,30 @@ These functions are defined in generator.py and handle:
 - Rendering nginx.conf from a template
 
 - Creating the docker-compose.yml file
+
+If the import fails, it shows a helpful message asking to install the missing dependencies:
+
+```
+ Missing required modules. Please install them using 'pip install -r requirements.txt'.
+
+``` 
+
+- Then a function is called to deploy the microservices
+```
+def deploy(config_path):
+```
+
+```
+services = data.get('services', [])
+if not services:
+    print("❌ No services found in config.")
+    return
+```
+- The checks the defined microservices.
+
+- Finally generates ginx.conf and docker-compose.yml based on the defined services
+
+```
+generate_nginx_config(services)
+generate_docker_compose(services)
+```
