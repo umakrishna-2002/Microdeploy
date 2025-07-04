@@ -109,3 +109,14 @@ if not services:
 generate_nginx_config(services)
 generate_docker_compose(services)
 ```
+
+Execute the generated docker-compose file
+
+```
+python main.py deploy config.yaml
+ ```
+- It reads the config.yaml file passed as an argument
+
+- Then it automatically builds the proxy and Docker Compose files using the services defined
+
+
