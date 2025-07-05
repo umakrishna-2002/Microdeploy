@@ -141,4 +141,4 @@ Clone the repo
    python main.py deploy config.yaml
 
    
-  <pre> ```text ┌────────────────────┐ │ config.yaml │ └────────┬───────────┘ │ ▼ ┌─────────────┐ │ main.py │ ← CLI └─────┬───────┘ ▼ ┌──────────────┐ │ generator.py │ └─────┬────────┘ ▼ ┌────────────────────┐ │ nginx.conf.j2 │ ← Jinja2 Template └────────┬───────────┘ ▼ ┌──────────────┐ │ nginx.conf │ ← Output └──────────────┘ ┌────────────────────┐ │ docker-compose.yml │ ← Output └────────────────────┘ ``` </pre>
+ 
