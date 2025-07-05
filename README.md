@@ -123,3 +123,21 @@ python main.py deploy config.yaml
 - http://localhost:8080/go
 
 - http://localhost:8080/python   
+
+Clone the repo 
+
+```
+ git clone https://github.com/your-username/microdeploy.git
+
+ cd microdeploy
+
+ ```
+
+ - Make docker is installed and running.
+
+ 1. Define your services in `config.yaml`.
+2. Run:
+   ```bash
+   python main.py deploy config.yaml
+
+   ```
