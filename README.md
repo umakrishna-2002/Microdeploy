@@ -140,6 +140,7 @@ Clone the repo
    ```bash
    python main.py deploy config.yaml
 
+   
    ```
 
               ┌────────────────────┐
@@ -172,3 +173,4 @@ Clone the repo
       └────────────┴────────────┴────────────┴────────────┘
                       ▲         ▲         ▲
                       └───── NGINX Reverse Proxy ─────┘
+```
