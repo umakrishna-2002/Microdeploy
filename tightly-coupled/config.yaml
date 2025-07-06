@@ -1,0 +1,9 @@
+services:
+  - name: frontend
+    path: ./frontend
+    port: 3000
+    depends_on: [backend]
+
+  - name: backend
+    path: ./backend
+    port: 5000
