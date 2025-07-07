@@ -1,6 +1,13 @@
-New model is being in progress that can automates the containers that are tightly coupled,.
+MicroDeploy is built to support multiple reverse proxy engines like NGINX, Apache, or even Traefik — without requiring users to change any core logic in the codebase.
 
-This is a specialized example built on top of the MicroDeploy CLI tool, showcasing how to define and generate Docker Compose + NGINX config for tightly coupled services (e.g., a classic 3-tier app: frontend, backend, and database).
+Typical workflow would be:
 
-
-
+```
+MicroDeploy/
+├── templates/
+│   ├── nginx.conf.j2      # Default NGINX reverse proxy template
+│   └── apache.conf.j2     # (Optional) Apache reverse proxy template
+├── generator.py           # Automatically selects template based on config.yaml
+├── config.yaml            # Define services and reverse proxy engine
+└── ...
+```
