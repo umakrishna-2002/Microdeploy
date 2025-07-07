@@ -9,7 +9,7 @@ def load_config(path):
 
 # Generate the NGINX reverse proxy configuration dynamically
 def generate_nginx_config(services):
-    env = Environment(loader=FileSystemLoader('./'))
+    env = Environment(loader=FileSystemLoader('templates'))
     
     # Load the nginx.conf template (Jinja2 format)
     template = env.get_template('nginx.conf.j2')
