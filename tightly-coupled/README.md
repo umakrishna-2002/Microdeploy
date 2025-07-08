@@ -30,6 +30,7 @@ Renders the config (e.g., nginx.conf, apache.conf) based on your services.
 
 Automatically adds the reverse proxy as a service in the docker-compose.yml.
 
+
 If no reverse_proxy is mentioned:
 
 - The tool skips reverse proxy generation entirely.

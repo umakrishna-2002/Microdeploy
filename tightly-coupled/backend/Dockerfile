@@ -1,12 +1,14 @@
-FROM python:3.11-slim
+FROM node:18.9.1
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY package.json .
+
+RUN npm install
 
 COPY . .
 
-EXPOSE 5000
-CMD ["python", "app.py"]
+EXPOSE 5050
+
+CMD ["npm", "start"]
 

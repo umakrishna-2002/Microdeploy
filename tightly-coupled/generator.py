@@ -1,76 +1,80 @@
-import yaml
 import os
+import yaml
+import json
 from jinja2 import Environment, FileSystemLoader
 
-# Load config.yaml file that defines all services
 def load_config(path):
     with open(path, 'r') as f:
         return yaml.safe_load(f)
 
-# Generate the NGINX reverse proxy configuration dynamically
-def generate_nginx_config(services):
+def validate_services(services):
+    for svc in services:
+        if 'name' not in svc or 'port' not in svc:
+            raise ValueError("Each service must have a 'name' and 'port'")
+
+def generate_nginx_config(services, proxy_type="nginx"):
+    if not services:
+        print("⚠️  No services provided for reverse proxy configuration.")
+        return
+
+    # Only generate reverse proxy config if needed
+    services_with_proxy = [s for s in services if s.get('use_proxy')]
+    if not services_with_proxy:
+        print("ℹ️  Skipping proxy config generation: no services require it.")
+        return
+
     env = Environment(loader=FileSystemLoader('templates'))
-    
-    # Load the nginx.conf template (Jinja2 format)
-    template = env.get_template('nginx.conf.j2')
+    template_file = f"{proxy_type}.conf.j2"
+    template = env.get_template(template_file)
 
-    # Render the final nginx.conf by passing service list
-    output = template.render(services=services)
-
-    # Write the rendered output to nginx.conf
-    with open('nginx.conf', 'w') as f:
+    output = template.render(services=services_with_proxy)
+    with open("nginx.conf", "w") as f:
         f.write(output)
-    
-    print("✅ Generated nginx.conf")
+    print("✅ Reverse proxy config generated: nginx.conf")
 
-# Generate docker-compose.yml file from config.yaml input
 def generate_docker_compose(services):
     compose = {
-        'version': '3',
+        'version': '3.8',
         'services': {},
+        'volumes': {},
     }
 
-    # Iterate through each microservice defined in config.yaml
     for svc in services:
         config = {
-            # This is the container name used by other containers to communicate
             'container_name': svc['name'],
-            
-            # Expose internal ports (e.g., Flask = 5000, Node = 3000)
             'expose': [str(svc['port'])] if 'port' in svc else [],
+            'ports': [f"{svc['port']}:{svc['port']}"] if 'port' in svc else [],
         }
 
-        # Either build from Dockerfile or pull image from Docker Hub
         if 'build' in svc:
             config['build'] = svc['build']
         elif 'image' in svc:
             config['image'] = svc['image']
 
-        # Handle dependencies — useful in tightly coupled services
         if 'depends_on' in svc:
             config['depends_on'] = svc['depends_on']
 
-        # Optional: Add environment variables
         if 'environment' in svc:
             config['environment'] = svc['environment']
 
-        # Optional: Mount volumes if defined
         if 'volumes' in svc:
             config['volumes'] = svc['volumes']
+            for vol in svc['volumes']:
+                vol_name = vol.split(':')[0]
+                compose['volumes'][vol_name] = {'driver': 'local'}
 
-        # Add final service block to Compose dictionary
         compose['services'][svc['name']] = config
 
-    # Add the NGINX reverse proxy to route requests to correct service
-    compose['services']['nginx'] = {
-        'image': 'nginx:latest',
-        'ports': ['8080:80'],
-        'volumes': ['./nginx.conf:/etc/nginx/nginx.conf'],
-        'depends_on': [svc['name'] for svc in services],  # Make sure NGINX waits for app services
-    }
+    # Add nginx only if needed
+    services_with_proxy = [s for s in services if s.get('use_proxy')]
+    if services_with_proxy:
+        compose['services']['nginx'] = {
+            'image': 'nginx:latest',
+            'ports': ['8080:80'],
+            'volumes': ['./nginx.conf:/etc/nginx/nginx.conf'],
+            'depends_on': [s['name'] for s in services_with_proxy]
+        }
 
-    # Write the entire Compose spec to a file
-    with open('docker-compose.yml', 'w') as f:
-        yaml.dump(compose, f, default_flow_style=False)
-
-    print("✅ Generated docker-compose.yml")
+    with open("docker-compose.yml", "w") as f:
+        yaml.dump(compose, f, default_flow_style=False, sort_keys=False)
+    print("✅ Docker Compose file generated: docker-compose.yml")
