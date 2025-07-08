@@ -55,3 +55,4 @@ If no reverse_proxy is mentioned:
 - Create an nginx.conf file
 
 - Add a proxy container (like Nginx) to the final Docker Compose setup
+
