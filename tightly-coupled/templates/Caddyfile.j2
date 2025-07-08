@@ -1,0 +1,7 @@
+{% for svc in services %}
+:80
+
+route /{{ svc.path }}* {
+    reverse_proxy {{ svc.name }}:{{ svc.port }}
+}
+{% endfor %}

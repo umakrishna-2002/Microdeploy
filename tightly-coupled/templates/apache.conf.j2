@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+
+    {% for svc in services %}
+    ProxyPreserveHost On
+    ProxyPass "/{{ svc.path }}/" "http://{{ svc.name }}:{{ svc.port }}/"
+    ProxyPassReverse "/{{ svc.path }}/" "http://{{ svc.name }}:{{ svc.port }}/"
+    {% endfor %}
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
