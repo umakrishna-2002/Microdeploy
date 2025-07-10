@@ -44,7 +44,7 @@ If no reverse_proxy is mentioned:
         print("ℹ️  Skipping proxy config generation: no services require it.")
         return
 ```
-```generatorr.py``` is upated in a way to taake the reverse proxy for load balancing if needed else skip.        
+```generator.py``` is upated in a way to take the reverse proxy for load balancing if needed else skip.        
 
 - If no service requires a reverse proxy (like Nginx/Apache), the generator will skip creating nginx.conf and won’t add a proxy service to the docker-compose.yml.
 
@@ -56,3 +56,7 @@ If no reverse_proxy is mentioned:
 
 - Add a proxy container (like Nginx) to the final Docker Compose setup
 
+```
+# Run MicroDeploy with config.yaml
+python main.py deploy config.yaml
+```
